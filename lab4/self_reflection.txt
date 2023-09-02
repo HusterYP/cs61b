@@ -8,19 +8,19 @@ A:
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: 独立完成了 LinkedListDequeue 和 ArrayDequeue
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: ArrayDeque 中对 head 和 tail 的维护感觉很麻烦，参考 Java 标准库中的 ArrayDequeue，实际上有更优雅的方式去维护
 
 Q: What did you learn by talking to your partner about writing ArrayDeque?
 
-A:
+A: 体会到了循环数组的妙用
 
 Q: What do you wish you would have known before writing ArrayDeque, if anything?
 
-A:
+A: 相关原理和设计
 
 Q: If you wrote ArrayDeque again, what would you do differently, if anything?
 
@@ -36,15 +36,15 @@ A:
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: 独立完成
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: 
 
 Q: What did you learn by talking to your partner about writing LinkedListDeque?
 
-A:
+A: 哨兵和循环指针的妙用
 
 Q: What do you wish you would have known before writing LinkedListDeque, if anything?
 
@@ -60,4 +60,4 @@ Meta:
 
 Q: Did you like this design review process? Anything we should do differently next time?
 
-A: 
+A: Yes
