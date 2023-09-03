@@ -8,32 +8,36 @@ public class TestArrayDequeGold {
         StudentArrayDeque<Integer> studentDeque = new StudentArrayDeque<>();
         ArrayDequeSolution<Integer> solution = new ArrayDequeSolution();
 
+        StringBuilder result = new StringBuilder();
+
         for (int i = 0; i < 10; i += 1) {
             double numberBetweenZeroAndOne = StdRandom.uniform();
             if (numberBetweenZeroAndOne < 0.5) {
                 studentDeque.addLast(i);
                 solution.addLast(i);
+                result.append("addLast(").append(i).append(")").append("\n");
             } else {
                 studentDeque.addFirst(i);
                 solution.addFirst(i);
+                result.append("addFirst(").append(i).append(")").append("\n");
             }
         }
 
-        assertEquals(getSequence(solution), studentDeque.size(), solution.size());
+        assertEquals(result.toString(), studentDeque.size(), solution.size());
 
         for (int i = 0; i < 10; i += 1) {
-            assertFalse(getSequence(solution), studentDeque.isEmpty());
+            assertFalse(result.toString(), studentDeque.isEmpty());
             double numberBetweenZeroAndOne = StdRandom.uniform();
             if (numberBetweenZeroAndOne < 0.5) {
-                String sequence = getSequence(solution);
                 Integer source = studentDeque.removeFirst();
                 Integer target = solution.removeFirst();
-                assertEquals(sequence, source, target);
+                result.append("removeFirst()").append("\n");
+                assertEquals(result.toString(), source, target);
             } else {
-                String sequence = getSequence(solution);
                 Integer source = studentDeque.removeLast();
                 Integer target = solution.removeLast();
-                assertEquals(sequence, source, target);
+                result.append("removeLast()").append("\n");
+                assertEquals(result.toString(), source, target);
             }
         }
     }
@@ -43,7 +47,7 @@ public class TestArrayDequeGold {
         for (int i = 0; i < solution.size(); i++) {
             result.append(solution.get(i));
             if (i != solution.size() - 1) {
-                result.append(" ");
+                result.append(",");
             }
         }
         return result.toString();
