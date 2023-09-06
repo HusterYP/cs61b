@@ -30,8 +30,13 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         if (isFull()) {
             throw new RuntimeException("Ring buffer overflow");
         }
-        this.fillCount++;
-        // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
+        rb[last] = x;
+        if (last < capacity - 1) {
+            last++;
+        } else {
+            last = 0;
+        }
+        fillCount++;
     }
 
     /**
@@ -40,15 +45,56 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * covered Monday.
      */
     public T dequeue() {
-        // TODO: Dequeue the first item. Don't forget to decrease fillCount and update 
+        if (isEmpty()) {
+            throw new RuntimeException("Ring buffer underflow");
+        }
+        T item = (T) rb[first];
+        rb[first] = null;
+        if (first < capacity - 1) {
+            first++;
+        } else {
+            first = 0;
+        }
+        fillCount--;
+        return item;
     }
 
     /**
      * Return oldest item, but don't remove it.
      */
     public T peek() {
-        // TODO: Return the first item. None of your instance variables should change.
+        if (isEmpty()) {
+            return null;
+        }
+        return (T) rb[first];
     }
 
-    // TODO: When you get to part 5, implement the needed code to support iteration.
+//    @Override
+//    public Iterator<T> iterator() {
+//        return new ArrayRingBufferIterator<>();
+//    }
+//
+//    private class ArrayRingBufferIterator<R> implements Iterator<R> {
+//        private int index;
+//
+//        ArrayRingBufferIterator() {
+//            index = first;
+//        }
+//
+//        @Override
+//        public boolean hasNext() {
+//            return index < fillCount;
+//        }
+//
+//        @Override
+//        public R next() {
+//            R r = (R) rb[index];
+//            if (index < capacity - 1) {
+//                index++;
+//            } else {
+//                index = 0;
+//            }
+//            return r;
+//        }
+//    }
 }
