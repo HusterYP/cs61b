@@ -64,7 +64,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      */
     public T peek() {
         if (isEmpty()) {
-            return null;
+            throw new RuntimeException("Ring buffer underflow");
         }
         return (T) rb[first];
     }
@@ -75,30 +75,37 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     }
 
     private class ArrayRingBufferIterator<R> implements Iterator<R> {
-        private int index;
+        // 已经遍历的个数
+        private int count;
 
         ArrayRingBufferIterator() {
-            index = first;
+            count = 0;
         }
 
         @Override
         public boolean hasNext() {
-            if (index >= first) {
-                return index - first < fillCount;
-            } else {
-                return capacity - first + index > fillCount;
-            }
+            return count < fillCount;
         }
 
         @Override
         public R next() {
-            R r = (R) rb[index];
-            if (index < capacity - 1) {
-                index++;
-            } else {
-                index = 0;
+            int index = first + count;
+            if (index >= capacity) {
+                index = count - capacity + first;
             }
-            return r;
+            count++;
+            return (R) rb[index];
         }
     }
+
+//    public static void main(String[] args) {
+//        ArrayRingBuffer<Integer> buffer = new ArrayRingBuffer<>(5);
+//        for (int i = 0; i < 5; i++) {
+//            buffer.enqueue(i);
+//        }
+//
+//        for (Integer index : buffer) {
+//            System.out.println(index);
+//        }
+//    }
 }
