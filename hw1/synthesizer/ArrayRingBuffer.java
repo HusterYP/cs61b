@@ -69,32 +69,36 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         return (T) rb[first];
     }
 
-//    @Override
-//    public Iterator<T> iterator() {
-//        return new ArrayRingBufferIterator<>();
-//    }
-//
-//    private class ArrayRingBufferIterator<R> implements Iterator<R> {
-//        private int index;
-//
-//        ArrayRingBufferIterator() {
-//            index = first;
-//        }
-//
-//        @Override
-//        public boolean hasNext() {
-//            return index < fillCount;
-//        }
-//
-//        @Override
-//        public R next() {
-//            R r = (R) rb[index];
-//            if (index < capacity - 1) {
-//                index++;
-//            } else {
-//                index = 0;
-//            }
-//            return r;
-//        }
-//    }
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayRingBufferIterator<>();
+    }
+
+    private class ArrayRingBufferIterator<R> implements Iterator<R> {
+        private int index;
+
+        ArrayRingBufferIterator() {
+            index = first;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (index >= first) {
+                return index - first < fillCount;
+            } else {
+                return capacity - first + index > fillCount;
+            }
+        }
+
+        @Override
+        public R next() {
+            R r = (R) rb[index];
+            if (index < capacity - 1) {
+                index++;
+            } else {
+                index = 0;
+            }
+            return r;
+        }
+    }
 }
